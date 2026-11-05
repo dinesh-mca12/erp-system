@@ -85,6 +85,22 @@ export default function handler(req: any, res: any): void {
 
   const pathParts = path.split("/").filter(Boolean);
   const collectionRoutes = new Set([
+    "sales/invoices",
+    "sales/credit-notes",
+    "sales/retainers",
+    "sales/orders",
+    "purchase/bills",
+    "purchase/orders",
+    "projects/timesheets",
+    "accounting/accounts",
+    "accounting/journals",
+    "accounting/assets",
+    "banking/accounts",
+    "banking/transactions",
+    "hr/payslips",
+    "hr/employees",
+    "communication/channels",
+    "dashboard/activities",
     "products/categories",
     "products/units",
     "products/brands",
