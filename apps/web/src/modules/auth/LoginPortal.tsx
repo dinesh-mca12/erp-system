@@ -36,34 +36,69 @@ export default function LoginPortal() {
         body: JSON.stringify(payload),
       });
 
-      const json = await res.json();
+      const responseText = await res.text();
+      let json: {
+        success?: boolean;
+        data?: {
+          companyId?: string;
+          branchId?: string;
+          user?: {
+            uid: string;
+            email?: string;
+            role: string;
+            companyId: string;
+            branchIds: string[];
+          };
+          token?: string;
+        };
+        error?: { message?: string };
+      };
+
+      try {
+        json = JSON.parse(responseText);
+      } catch {
+        throw new Error(
+          `The server returned an invalid response (${res.status}). Please verify the API deployment.`
+        );
+      }
 
       if (!res.ok || !json.success) {
         throw new Error(json.error?.message || "Authentication process failed.");
       }
 
+      const data = json.data;
+      if (!data) {
+        throw new Error("The server returned an incomplete authentication response.");
+      }
+
       if (isSignUp) {
+        if (!data.companyId || !data.branchId) {
+          throw new Error("The registration response is missing company details.");
+        }
         setSuccessMsg("✓ Company Registered Successfully! Logging you in...");
         setTimeout(() => {
           // Log in with the registered credentials
           dispatch(
             setCredentials({
               user: {
-                uid: `mock-user-${json.data.companyId}`,
+                uid: `mock-user-${data.companyId}`,
                 email: email,
                 role: "company_admin",
-                companyId: json.data.companyId,
-                branchIds: [json.data.branchId],
+                companyId: data.companyId,
+                branchIds: [data.branchId],
               },
-              token: `mock_company_admin_${json.data.companyId}`,
+              token: `mock_company_admin_${data.companyId}`,
             })
           );
         }, 1500);
       } else {
+        if (!data.user || !data.token) {
+          throw new Error("The login response is missing authentication details.");
+        }
         dispatch(
           setCredentials({
-            user: json.data.user,
-            token: json.data.token,
+            user: data.user,
+            token: data.token,
           })
         );
       }

@@ -29,11 +29,14 @@ const allowedOrigins = [
     "http://localhost:5173",
     "http://localhost:5002",
     "http://localhost:3000",
-    "http://localhost:5174"
-];
+    "http://localhost:5174",
+    process.env.FRONTEND_ORIGIN,
+].filter((origin) => Boolean(origin));
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin ||
+            allowedOrigins.includes(origin) ||
+            origin.endsWith(".vercel.app")) {
             callback(null, true);
         }
         else {
@@ -70,8 +73,10 @@ app.get("/health", (req, res) => {
 // Centralized error handling middleware
 app.use(errorHandler);
 // Start server
-app.listen(port, () => {
-    console.log(`[FlowOS API] Server is running on port ${port}`);
-});
+if (process.env.VERCEL !== "1") {
+    app.listen(port, () => {
+        console.log(`[FlowOS API] Server is running on port ${port}`);
+    });
+}
 export default app;
 //# sourceMappingURL=server.js.map

@@ -14,7 +14,7 @@ export const authenticate = async (req, res, next) => {
     }
     const token = authHeader.split(" ")[1];
     // Helper/Mock workflow for simple developer testing (e.g. Bearer mock_company_admin_comp_abc123)
-    if (process.env.FIRESTORE_EMULATOR_HOST && token.startsWith("mock_")) {
+    if ((process.env.FIRESTORE_EMULATOR_HOST || process.env.NODE_ENV !== "production") && token.startsWith("mock_")) {
         const parts = token.substring(5).split("_"); // e.g. ["company", "admin", "comp", "abc123"]
         let role = "company_admin";
         let companyId = "comp_abc123";
