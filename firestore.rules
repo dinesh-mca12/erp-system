@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to verify auth
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to extract tenant ID
+    function getCompanyId() {
+      return request.auth.token.companyId;
+    }
+
+    // Tenant isolation rule for any collection
+    match /{collection}/{document} {
+      allow read, write: if isAuthenticated() && 
+        (resource == null || resource.data.companyId == getCompanyId()) &&
+        (request.resource == null || request.resource.data.companyId == getCompanyId());
+    }
+  }
+}
