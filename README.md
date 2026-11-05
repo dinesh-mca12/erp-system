@@ -33,6 +33,14 @@ pnpm dev:web
 pnpm dev:desktop
 ```
 
+## Demo environment
+
+The deployed demo includes seeded records for customers, vendors, products, sales,
+purchasing, accounting, banking, HR, projects, tasks, warehouses, and communication.
+Use `admin@flowos.com` with password `adminpassword` to sign in. The Vercel demo API
+stores CRUD changes in serverless memory, so changes are intended for workflow testing
+and may reset when a new serverless instance starts.
+
 ## AI Report Request Template
 
 Copy this block whenever you need a report. Keep each answer short. Remove fields that do not apply.
