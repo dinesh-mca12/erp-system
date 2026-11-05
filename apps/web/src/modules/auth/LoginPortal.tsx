@@ -75,19 +75,20 @@ export default function LoginPortal() {
         if (!data.companyId || !data.branchId) {
           throw new Error("The registration response is missing company details.");
         }
+        const { companyId, branchId } = data;
         setSuccessMsg("✓ Company Registered Successfully! Logging you in...");
         setTimeout(() => {
           // Log in with the registered credentials
           dispatch(
             setCredentials({
               user: {
-                uid: `mock-user-${data.companyId}`,
+                uid: `mock-user-${companyId}`,
                 email: email,
                 role: "company_admin",
-                companyId: data.companyId,
-                branchIds: [data.branchId],
+                companyId,
+                branchIds: [branchId],
               },
-              token: `mock_company_admin_${data.companyId}`,
+              token: `mock_company_admin_${companyId}`,
             })
           );
         }, 1500);
