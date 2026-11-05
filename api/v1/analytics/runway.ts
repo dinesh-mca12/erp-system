@@ -14,7 +14,14 @@ export default function handler(req: any, res: any): void {
 
   sendJson(res, 200, {
     success: true,
-    data: { runwayMonths: 8, currentCash: 1450000, monthlyBurn: 181250, riskLevel: "low" },
+    data: {
+      runwayMonths: 8,
+      currentCash: 1450000,
+      monthlyBurn: 181250,
+      averageMonthlyBurn: 181250,
+      riskLevel: "low",
+      alerts: [],
+    },
     error: null,
   });
 }
