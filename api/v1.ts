@@ -110,10 +110,15 @@ export default function handler(req: any, res: any): void {
     "employees/departments",
   ]);
   const isCollectionRoute = collectionRoutes.has(path);
-  const collectionPath = pathParts.length > 1 && !isCollectionRoute && /^[a-z0-9-]+$/.test(pathParts[pathParts.length - 1])
+  const recordCollections = new Set(["customers", "vendors", "products", "tasks", "employees"]);
+  const hasRecordId = pathParts.length > 1 &&
+    recordCollections.has(pathParts[0]) &&
+    !isCollectionRoute &&
+    /^[a-z0-9_-]+$/.test(pathParts[pathParts.length - 1]);
+  const collectionPath = hasRecordId
     ? pathParts.slice(0, -1).join("/")
     : path;
-  const recordId = pathParts.length > 1 ? pathParts[pathParts.length - 1] : null;
+  const recordId = hasRecordId ? pathParts[pathParts.length - 1] : null;
   const collection = getCollection(collectionPath);
 
   if (req.method === "GET") {
