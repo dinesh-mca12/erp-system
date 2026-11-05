@@ -138,7 +138,7 @@ export default function Dashboard() {
         <div className="text-center">
           <AlertTriangle className="mx-auto h-12 w-12 mb-3" />
           <h2 className="text-xl font-bold font-display">Data Load Error</h2>
-          <p className="text-slate-400 mt-1">Make sure the Express backend server is running on port 5000.</p>
+          <p className="text-slate-400 mt-1">The data service is temporarily unavailable. Please retry in a moment.</p>
           <button
             onClick={() => refetch()}
             className="mt-4 px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-lg transition-colors"
