@@ -433,7 +433,7 @@ export default function Dashboard() {
             <div>
               <h3 className="font-bold text-sm text-slate-200">AI Cash Runway & Liquidity Projection</h3>
               <p className="text-xs text-slate-400 mt-1">
-                Estimated Runway: <span className="font-bold text-violet-400 font-display">{runwayReport.runwayMonths} months</span> • Average Monthly Operating Burn: <span className="font-bold text-slate-300">₹{runwayReport.averageMonthlyBurn.toLocaleString()}</span>
+                Estimated Runway: <span className="font-bold text-violet-400 font-display">{runwayReport.runwayMonths} months</span> • Average Monthly Operating Burn: <span className="font-bold text-slate-300">₹{(runwayReport.averageMonthlyBurn ?? runwayReport.monthlyBurn ?? 0).toLocaleString()}</span>
               </p>
             </div>
           </div>
