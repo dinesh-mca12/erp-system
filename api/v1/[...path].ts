@@ -1,4 +1,4 @@
-import { configureCors, sendJson } from "../../_lib/auth.js";
+import { configureCors, sendJson } from "../_lib/auth.js";
 
 const summary = (companyId: string) => ({
   companyId,
